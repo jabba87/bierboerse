@@ -21,8 +21,9 @@ function getBeers($club){
 	global $database,$prefix;
 	$query = "SELECT * FROM `".$database."`.`".$prefix.$club."`";
 	$res = mysql_query($query);
-	while ($row[] = mysql_fetch_array($res)) {
-}
+	while ($h = mysql_fetch_array($res)) {
+		$row[] = $h;
+	}
 	return $row;
 }
 
@@ -38,7 +39,8 @@ function getAllBeers(){
 				WHERE bd.id = partners.beer_id AND sw.id = partners.partner_id) AS t2
 			ON(t1.id = t2.id)";
 	$res = mysql_query($query);
-	while($row[] = mysql_fetch_array($res)){
+	while ($h = mysql_fetch_array($res)) {
+		$row[] = $h;
 	}
 	return $row;
 }

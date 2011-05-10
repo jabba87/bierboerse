@@ -6,7 +6,20 @@ $beers = getAllBeers();
 
 echo "<table><tr><th colspan='2' >BD Club</th><th colspan='2'>BC Club</th><th colspan='2'>Schankwagen</th></tr>";
 foreach($beers as $row){
-echo "<tr><td>".$row['bdprice']."</td><td>".$row['bdname']."</td><td>".$row['bcprice']."</td><td>".$row['bcname']."</td><td>".$row['outprice']."</td><td>".$row['outname']."</td></tr>";
+echo "<tr><td>".
+	$row['bdprice'].
+	"</td><td>".
+//	"__".$row['bdname'].
+	"<img src=\"images/itemicon_".$row['bdname'].".png\" width=\"100\">".
+	"</td><td>".
+	$row['bcprice'].
+	"</td><td>".
+	$row['bcname'].
+	"</td><td>".
+	$row['outprice'].
+	"</td><td>".
+	$row['outname'].
+	"</td></tr>";
 }
 echo "</table>";
 
