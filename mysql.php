@@ -65,7 +65,19 @@ function getAllBeerHistory(){
 	return $data;
 }
 
+function getPassword($name){
+  global $database,$prefix;
+  $query = "SELECT password FROM `".$database."`.`".$prefix."clubs` WHERE name = '$name'";
+  $res = mysql_query($query);
+  return mysql_fetch_array($res);
+}
 
+function getAdminPassword(){
+  global $database,$prefix;
+  $query = "SELECT password FROM `".$database."`.`".$prefix."settings`";
+  $res = mysql_query($query);
+  return mysql_fetch_array($res);
+}
 
 function logEvent($time,$ip,$event,$details=NULL){
 	global $database,$prefix;
