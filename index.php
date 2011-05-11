@@ -8,6 +8,8 @@ require "logging.php";
 
 require "header.html";
 
+logActions(getIP()); 
+
 if(isset($_GET['action'])){
 	switch($_GET['action']){
 		case 'view':
@@ -19,8 +21,13 @@ if(isset($_GET['action'])){
 		case 'admin':
 			require "admin.php";
 			break;
+		case 'login':
+		  require "login.php";
+		  break;
 		default:require "view.php";
 	}
+}else{
+  header("Location: index.php?action=view");
 }
 
 require "footer.html";
