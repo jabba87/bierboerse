@@ -24,6 +24,9 @@ if(isset($_GET['action'])){
 		case 'login':
 		  require "login.php";
 		  break;
+		case 'logout':
+		  require "logout.php";
+		  break;
 		default:require "view.php";
 	}
 }else{

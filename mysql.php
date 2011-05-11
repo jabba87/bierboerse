@@ -69,19 +69,22 @@ function getPassword($name){
   global $database,$prefix;
   $query = "SELECT password FROM `".$database."`.`".$prefix."clubs` WHERE name = '$name'";
   $res = mysql_query($query);
-  return mysql_fetch_array($res);
+  $pwd = mysql_fetch_row($res);
+  return $pwd[0];
 }
 
 function getAdminPassword(){
   global $database,$prefix;
   $query = "SELECT password FROM `".$database."`.`".$prefix."settings`";
   $res = mysql_query($query);
-  return mysql_fetch_array($res);
+  $pwd = mysql_fetch_row($res);
+  return $pwd[0];
 }
 
 function logEvent($time,$ip,$event,$details=NULL){
 	global $database,$prefix;
-	$query = "INSERT INTO `".$database."`.`".$prefix."events`(time,ip,event,details) VALUES (FROM_UNIXTIME($time), '$ip', '$event', '$details')";
+	// ergibt bei mir immer einen fehler, ersetzt durch NOW()
+	$query = "INSERT INTO `".$database."`.`".$prefix."events`(time,ip,event,details) VALUES (FROM_UNIXTIME(".$time."), '".$ip."', '".$event."', '".$details."')";
 	$res = mysql_query($query) or die("MySQL Fehler");
 }
-
+?>

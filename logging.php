@@ -36,11 +36,4 @@ function logActions($ip){
   }	
 }
 
-
-
-	
-	
-
-
-
 ?>
