@@ -6,6 +6,8 @@ define("bierbörse",true);
 require_once "mysql.php";
 require "logging.php";
 
+require "header.html";
+
 if(isset($_GET['action'])){
 	switch($_GET['action']){
 		case 'view':
@@ -21,7 +23,5 @@ if(isset($_GET['action'])){
 	}
 }
 
-
-
-
+require "footer.html";
 ?>

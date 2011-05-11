@@ -1,30 +1,33 @@
 <?php
-
 defined("bierbörse") or die("Kein direkter Zugriff");
 connect();
 $beers = getAllBeers();
 
-echo "<table><tr><th colspan='2' >BD Club</th><th colspan='2'>BC Club</th><th colspan='2'>Schankwagen</th></tr>";
+echo "<div><table class=\"stdview\"><tr><th colspan='2' >".
+	 "<img src=\"images/icon_BD.png\">".
+	 "</th><th colspan='2'>".
+	 "<img src=\"images/icon_BC.png\">".
+	 "</th>"."<th colspan='2'>".
+	 "<img src=\"images/icon_OUT.png\">".
+	 "</th></tr>";
 foreach($beers as $row){
 echo "<tr><td>".
-	$row['bdprice'].
+	number_format($row['bdprice']/100,2)." €".
 	"</td><td>".
-//	"__".$row['bdname'].
 	"<img src=\"images/itemicon_".$row['bdname'].".png\" width=\"100\">".
 	"</td><td>".
-	$row['bcprice'].
+	number_format($row['bcprice']/100,2)." €".
 	"</td><td>".
-	$row['bcname'].
-	"</td><td>".
-	$row['outprice'].
-	"</td><td>".
-	$row['outname'].
-	"</td></tr>";
+	"<img src=\"images/itemicon_".$row['bcname'].".png\" width=\"100\">".
+	"</td><td>";
+	if (!$row['outprice']=="")
+		echo number_format($row['outprice']/100,2)." €";
+	echo "</td><td>";
+	if (!$row['outname']=="")
+		echo "<img src=\"images/itemicon_".$row['outname'].".png\" width=\"100\">";
+	echo "</td></tr>";
 }
-echo "</table>";
-
-$data = getAllBeerHistory();
-var_dump($data);
+echo "</table></div>";
 
 close();
 ?>
