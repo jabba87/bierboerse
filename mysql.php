@@ -45,6 +45,16 @@ function getAllBeers(){
 	return $row;
 }
 
+function getBeerList($club){
+	global $database,$prefix;
+	$query = "Select cb.id, cb.std_price, cb.min_price, cb.cur_price, beer.name FROM  `".$database."`.`".$prefix."beers` beer, `".$database."`.`".$prefix."club_beers` cb WHERE cb.club_id = $club AND cb.beer_id = beer.id";
+	$res = mysql_query($query);
+	while ($h = mysql_fetch_array($res)) {
+		$row[] = $h;
+	}
+	return $row;
+}
+
 function getBeerHistory($id){
 	global $database,$prefix;
 	$query = "SELECT UNIX_TIMESTAMP(time) as time, cur_price FROM `".$database."`.`".$prefix."prices` WHERE clubBeers_id = ".$id;
@@ -68,15 +78,39 @@ function getAllBeerHistory(){
 function getPassword($name){
   global $database,$prefix;
   $query = "SELECT password FROM `".$database."`.`".$prefix."clubs` WHERE name = '$name'";
-  $res = mysql_query($query);
-  return mysql_fetch_array($res);
+  $res = mysql_fetch_array(mysql_query($query));
+  return $res['password'];
 }
 
 function getAdminPassword(){
   global $database,$prefix;
   $query = "SELECT password FROM `".$database."`.`".$prefix."settings`";
-  $res = mysql_query($query);
-  return mysql_fetch_array($res);
+  $res = mysql_fetch_array(mysql_query($query));
+  return $res['password'];
+}
+
+function getSettings(){
+	global $database,$prefix;
+	$query = "SELECT max_price, beer_incr, beer_decr, club_incr, club_decr FROM `".$database."`.`".$prefix."settings`";
+	$res = mysql_query($query);
+	while($row = mysql_fetch_array($res)){
+		$out[] = $row;
+	}
+	return $out;
+}
+
+function setSettings($settings){
+	global $database,$prefix;
+	$values="";
+	foreach($settings as $setting => $val){
+		if(!empty($values)){
+			$values .= ", ";
+		}
+		$values .= $setting." = ".$val;
+	}
+	$query = "UPDATE `".$database."`.`".$prefix."settings` SET $values WHERE id = 1;";
+	$res = mysql_query($query);
+	
 }
 
 function logEvent($time,$ip,$event,$details=NULL){

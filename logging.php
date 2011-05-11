@@ -36,6 +36,11 @@ function logActions($ip){
   }	
 }
 
+function logLogin($ip,$user,$success){
+	logEvent(time(),$ip,"login",$user.$success);
+}
+
+
 
 
 	
