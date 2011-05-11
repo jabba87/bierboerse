@@ -10,11 +10,21 @@ if(isset($_POST)&&!empty($_POST)){
     }else{
       if(md5($_POST['kennwort'])==getPassword($_POST['club'])){
         $_SESSION[getIP()]['user'] = $_POST['club'];
-	}else{
+		switch($_POST['club']){
+			case "BD": 	$clubID = 1;
+						break;
+			case "BC": 	$clubID = 2;
+						break;
+			case "OUT": $clubID = 3;
+		}
+		$_SESSION[getIP()]['clubID'] = $clubID;
+
+		}else{
         echo "Falsches Kennwort.";
       }
     }
     close();
+
 	logLogin(getIP(),$_POST['club'],isset($_SESSION[getIP()]['user']));
 }
 
@@ -30,6 +40,10 @@ if(!isset($_SESSION[getIP()]['user'])){
     echo "<input type='submit'/>";
     echo "</form>";
 }else{
-	echo "<p>Du bist eingeloggt als ".$_SESSION[getIP()]['user']."</p>";
+	if($_SESSION[getIP()]['user'] == 'admin'){
+    header("Location: index.php?action=admin");
+  }else{
+    header("Location: index.php?action=input");
+  }
 }
 ?>

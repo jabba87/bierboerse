@@ -16,7 +16,6 @@ function close(){
 	mysql_close();
 }
 
-
 function getBeers($club){
 	global $database,$prefix;
 	$query = "SELECT * FROM `".$database."`.`".$prefix.$club."`";
@@ -39,6 +38,7 @@ function getAllBeers(){
 				WHERE bd.id = partners.beer_id AND sw.id = partners.partner_id) AS t2
 			ON(t1.id = t2.id)";
 	$res = mysql_query($query);
+	$row = array();
 	while ($h = mysql_fetch_array($res)) {
 		$row[] = $h;
 	}
@@ -115,7 +115,7 @@ function setSettings($settings){
 
 function logEvent($time,$ip,$event,$details=NULL){
 	global $database,$prefix;
-	$query = "INSERT INTO `".$database."`.`".$prefix."events`(time,ip,event,details) VALUES (FROM_UNIXTIME($time), '$ip', '$event', '$details')";
+	$query = "INSERT INTO `".$database."`.`".$prefix."events`(time,ip,event,details) VALUES (FROM_UNIXTIME(".$time."), '".$ip."', '".$event."', '".$details."')";
 	$res = mysql_query($query) or die("MySQL Fehler");
 }
-
+?>

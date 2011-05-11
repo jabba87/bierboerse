@@ -6,6 +6,8 @@ define("bierbörse",true);
 require_once "mysql.php";
 require "logging.php";
 
+require "header.html";
+
 logActions(getIP()); 
 
 if(isset($_GET['action'])){
@@ -22,14 +24,14 @@ if(isset($_GET['action'])){
 		case 'login':
 		  require "login.php";
 		  break;
+		case 'logout':
+		  require "logout.php";
+		  break;
 		default:require "view.php";
 	}
 }else{
   header("Location: index.php?action=view");
 }
 
-
-
-
-
+require "footer.html";
 ?>
