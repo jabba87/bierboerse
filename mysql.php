@@ -16,6 +16,14 @@ function close(){
 	mysql_close();
 }
 
+function sellBeer($id,$amount,$price,$clubid){
+  global $database,$prefix;
+  $query = "INSERT INTO `".$database."`.`".$prefix."sales` (time, amount, cur_price, clubs_id, clubbeers_id)"; 
+  $query .= "VALUES (NOW(), ".$amount.", ".$price.", ".$clubid.", ".$id.")";
+	$res = mysql_query($query);
+			
+}
+
 function getBeers($club){
 	global $database,$prefix;
 	$query = "SELECT * FROM `".$database."`.`".$prefix.$club."`";
@@ -70,7 +78,7 @@ function getAllBeerHistory(){
 	$query = "SELECT DISTINCT prices.clubBeers_id AS id, beers.name AS name, clubs.name AS club FROM `".$database."`.`".$prefix."prices` as prices, `".$database."`.`".$prefix."beers` as beers, `".$database."`.`".$prefix."club_beers` as clubbeers, `".$database."`.`".$prefix."clubs` as clubs WHERE clubbeers.beer_id = beers.id AND clubbeers.id = prices.clubBeers_id AND clubs.id = clubbeers.club_id";
 	$res = mysql_query($query);
 	while($row = mysql_fetch_array($res)){
-		$data[$row['name'].$row['club']] = getBeerHistory($row['id']);
+		$data[$row['club']." ".$row['name']] = getBeerHistory($row['id']);
 	}
 	return $data;
 }

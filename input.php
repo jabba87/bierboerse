@@ -17,47 +17,46 @@ if(!isset($_SESSION[getIP()]['user'])){
 				if (($type=="amount") && ($value>0))
 					$amounts[$ID] = $value;
 			}
-
-			$query = "INSERT INTO sales (time, amount, cur_price, clubs_id, clubbeers_id) VALUES ";
+      connect();
+			
 			foreach($amounts as $ID => $amount){
-				$query .= "(NOW(), ".$amount.", ".$prices[$ID].", ".$_SESSION[getIP()]['clubID'].", ".$ID."),";
+				sellBeer ($ID,$amount,$prices[$ID],$_SESSION[getIP()]['clubID']);
 			}
 
-			$query[strlen($query)-1] = ';';
-			connect();
-			$result = mysql_query($query);
+		
+			
 			close();
 		}
 	
-		echo "<script src=\"http://code.jquery.com/jquery-latest.js\"></script>";
-		echo "<script src=\"input.js\"></script>";
-		echo "<form id=\"sale\" action=\"index.php?action=input\" method=\"post\">".
+		$content.= "<script src=\"http://code.jquery.com/jquery-latest.js\"></script>";
+		$content.= "<script src=\"input.js\"></script>";
+		$content.= "<form id=\"sale\" action=\"index.php?action=input\" method=\"post\">".
 			 "<table>";
 				$club = "";
 				switch($_SESSION[getIP()]['user']){
-					case "bd": 	$club = "bd-club";
+					case "BD": 	$club = "bd-club";
 								break;
-					case "bc": 	$club = "bc-club";
+					case "BC": 	$club = "bc-club";
 								break;
-					case "out": $club = "schankwagen";
+					case "OUT": $club = "schankwagen";
 								break;
-					default:	$club = "bc-club";
+					default:	die("Undefinierter Club");
 				}
 		
 				connect();
 				$beers = getBeers($club);
 				close();
 				$i = 1;
-				echo "<tr>\n";
+				$content.= "<tr>\n";
 				foreach($beers as $beer){
-					echo "  <td>F".$i++."</td>\n".
+					$content.= "  <td>F".$i++."</td>\n".
 						 "  <td>".$beer['name']."</td>\n".
 						 "  <td class=\"cost\">".($beer['price']/100)."<input name=\"price_".$beer['id']."\" type=\"hidden\" value=\"".$beer['price']."\" >"."</td>\n".
 						 "  <td>€</td>\n".
 						 "  <td><input class=\"beers\" id=\"".$beer['id']."\" name=\"amount_".$beer['id']."\" type=\"text\" value=\"0\"></input></td>\n";
-					echo "</tr><tr>";
+					$content.= "</tr><tr>";
 				}
-				echo "</tr>\n".
+				$content.= "</tr>\n".
 					 "<tr>".
 						"<td></td>".
 						"<td>Summe</td>".

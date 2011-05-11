@@ -5,8 +5,8 @@ define("bierbörse",true);
 
 require_once "mysql.php";
 require "logging.php";
+global $content;
 
-require "header.html";
 
 logActions(getIP()); 
 
@@ -32,6 +32,7 @@ if(isset($_GET['action'])){
 }else{
   header("Location: index.php?action=view");
 }
-
+require "header.html";
+echo $content;
 require "footer.html";
 ?>

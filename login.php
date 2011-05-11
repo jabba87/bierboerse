@@ -5,7 +5,7 @@ if(isset($_POST)&&!empty($_POST)){
 	  if(md5($_POST['kennwort'])==getAdminPassword()){
         $_SESSION[getIP()]['user'] = 'admin';
 		}else{
-        echo "Falsches Kennwort.";
+        $content.= "Falsches Kennwort.";
       }
     }else{
       if(md5($_POST['kennwort'])==getPassword($_POST['club'])){
@@ -20,25 +20,26 @@ if(isset($_POST)&&!empty($_POST)){
 		$_SESSION[getIP()]['clubID'] = $clubID;
 
 		}else{
-        echo "Falsches Kennwort.";
+        $content.= "Falsches Kennwort.";
       }
     }
-    close();
+    
 
 	logLogin(getIP(),$_POST['club'],isset($_SESSION[getIP()]['user']));
+	close();
 }
 
 if(!isset($_SESSION[getIP()]['user'])){
-    echo "<form action='index.php?action=login' method='post'>";
-    echo "<select name='club' size='1'>
+    $content.= "<form action='index.php?action=login' method='post'>";
+    $content.= "<select name='club' size='1'>
       <option value='BD'>BD Club</option>
       <option value='BC'>BC Club</option>
       <option value='OUT'>Schankwagen</option>
       <option value='admin'>Adminübersicht</option>
       </select><br/>";
-    echo "<input name='kennwort' type='password'/><br/>";
-    echo "<input type='submit'/>";
-    echo "</form>";
+    $content.= "<input name='kennwort' type='password'/><br/>";
+    $content.= "<input type='submit'/>";
+    $content.= "</form>";
 }else{
 	if($_SESSION[getIP()]['user'] == 'admin'){
     header("Location: index.php?action=admin");
