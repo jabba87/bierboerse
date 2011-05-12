@@ -16,12 +16,18 @@ function close(){
 	mysql_close();
 }
 
-function sellBeer($id,$amount,$price,$clubid){
-  global $database,$prefix;
-  $query = "INSERT INTO `".$database."`.`".$prefix."sales` (time, amount, cur_price, clubs_id, clubbeers_id)"; 
-  $query .= "VALUES (NOW(), ".$amount.", ".$price.", ".$clubid.", ".$id.")";
-	$res = mysql_query($query);
-			
+function getSaleCount(){
+	global $database,$prefix;
+	$query = "SELECT Count(ID) saleCount  FROM `".$database."`.`".$prefix."sales`";
+	$res = mysql_fetch_array(mysql_query($query));
+	return $res['saleCount'];
+}
+
+function sellBeer($id,$amount,$price,$club){
+	global $database,$prefix;
+	$query = "INSERT INTO `".$database."`.`".$prefix."sales` (time, amount, cur_price, club, clubbeers_id)"; 
+	$query .= "VALUES (NOW(), ".$amount.", ".$price.", '".$club."', ".$id.")";
+	$res = mysql_query($query);	
 }
 
 function getBeers($club){
@@ -38,11 +44,11 @@ function getAllBeers(){
 	global $database,$prefix;
 	$query = "SELECT bdname, bdprice, bcname, bcprice, outname, outprice FROM (
 				SELECT bd.id, bd.price as bdprice, bd.name as bdname, bc.price as bcprice, bc.name as bcname 
-				FROM `".$database."`.`".$prefix."bc-club` bc, `".$database."`.`".$prefix."bd-club` bd, `".$database."`.`".$prefix."partners` partners 
+				FROM `".$database."`.`".$prefix."BC` bc, `".$database."`.`".$prefix."BD` bd, `".$database."`.`".$prefix."partners` partners 
 				WHERE bd.id = partners.beer_id AND bc.id = partners.partner_id) AS t1 
 			LEFT JOIN (
 				SELECT bd.id, sw.price as outprice, sw.name as outname 
-				FROM `".$database."`.`".$prefix."schankwagen` sw, `".$database."`.`".$prefix."bd-club` bd, `".$database."`.`".$prefix."partners` partners
+				FROM `".$database."`.`".$prefix."OUT` sw, `".$database."`.`".$prefix."BD` bd, `".$database."`.`".$prefix."partners` partners
 				WHERE bd.id = partners.beer_id AND sw.id = partners.partner_id) AS t2
 			ON(t1.id = t2.id)";
 	$res = mysql_query($query);
@@ -55,7 +61,7 @@ function getAllBeers(){
 
 function getBeerList($club){
 	global $database,$prefix;
-	$query = "Select cb.id, cb.std_price, cb.min_price, cb.cur_price, beer.name FROM  `".$database."`.`".$prefix."beers` beer, `".$database."`.`".$prefix."club_beers` cb WHERE cb.club_id = $club AND cb.beer_id = beer.id";
+	$query = "Select cb.id, cb.std_price, cb.min_price, cb.cur_price, beer.name FROM  `".$database."`.`".$prefix."beers` beer, `".$database."`.`".$prefix."club_beers` cb WHERE cb.club = '$club' AND cb.beer_id = beer.id";
 	$res = mysql_query($query);
 	while ($h = mysql_fetch_array($res)) {
 		$row[] = $h;
@@ -75,7 +81,7 @@ function getBeerHistory($id){
 
 function getAllBeerHistory(){
 	global $database,$prefix;
-	$query = "SELECT DISTINCT prices.clubBeers_id AS id, beers.name AS name, clubs.name AS club FROM `".$database."`.`".$prefix."prices` as prices, `".$database."`.`".$prefix."beers` as beers, `".$database."`.`".$prefix."club_beers` as clubbeers, `".$database."`.`".$prefix."clubs` as clubs WHERE clubbeers.beer_id = beers.id AND clubbeers.id = prices.clubBeers_id AND clubs.id = clubbeers.club_id";
+	$query = "SELECT DISTINCT prices.clubBeers_id AS id, beers.name AS name, clubs.name AS club FROM `".$database."`.`".$prefix."prices` as prices, `".$database."`.`".$prefix."beers` as beers, `".$database."`.`".$prefix."club_beers` as clubbeers, `".$database."`.`".$prefix."clubs` as clubs WHERE clubbeers.beer_id = beers.id AND clubbeers.id = prices.clubBeers_id AND clubs.name = clubbeers.club";
 	$res = mysql_query($query);
 	while($row = mysql_fetch_array($res)){
 		$data[$row['club']." ".$row['name']] = getBeerHistory($row['id']);

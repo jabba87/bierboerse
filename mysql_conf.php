@@ -10,7 +10,7 @@ $prefix = "bb_";*/
 
 /*Einstellungen Hutschi*/
 $user="hutschi";
-$password="ScKw3pUQSQMa9S4V";
+$password="4R4JZqdMFyPwQzYd";
 $database="bierboerse";
-$prefix="";
+$prefix="bb_";
 ?>

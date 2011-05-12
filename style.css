@@ -1,0 +1,24 @@
+/*img {width:100px}*/
+a {text-decoration:none}
+body {background-color:#DDDDDD}
+
+.input th img {width:150px; margin-bottom:30px}
+.input td {padding-left:15px; padding-right:15px; text-align:center; padding-top:5px; font-weight:bold; font-size:20px}
+.input input, button {font-size:18px; width:100px; text-align:center}
+.summe {color:red; font-size:20px; font-weight:bold}
+
+.input td img {height:20px}
+.input td {padding-top:0px}
+.input th img {width:50px; margin-bottom:0px}
+
+.admin td {text-align:right; font-size:20px; vertical-align:top}
+.admin table{margin-left:20px;}
+.admin input[type=button]{font-size:20px; margin-left:100px}
+.admin input[type=submit]{font-size:20px; margin-left:100px}
+.admin_icons th{text-align:center}
+.admin_icons td th {font-size:18px; padding-left:7px; padding-right:7px; text-align:right; vertical-align:top	}
+
+.stdview td {height:50px; padding-left:18px; padding-right:18px; border:0px solid black; font-size:24px; font-weight:bold}
+.stdview th {font-size:30px; font-weight:bold; padding-bottom:20px}
+.stdview img {width:100px}
+.stdview_pictures {vertical-align:top}

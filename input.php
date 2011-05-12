@@ -17,55 +17,43 @@ if(!isset($_SESSION[getIP()]['user'])){
 				if (($type=="amount") && ($value>0))
 					$amounts[$ID] = $value;
 			}
-      connect();
 			
+			connect();
 			foreach($amounts as $ID => $amount){
-				sellBeer ($ID,$amount,$prices[$ID],$_SESSION[getIP()]['clubID']);
+				sellBeer ($ID,$amount,$prices[$ID],$_SESSION[getIP()]['user']);
 			}
-
-		
-			
 			close();
 		}
 	
 		$content.= "<script src=\"http://code.jquery.com/jquery-latest.js\"></script>";
 		$content.= "<script src=\"input.js\"></script>";
-		$content.= "<form id=\"sale\" action=\"index.php?action=input\" method=\"post\">".
-			 "<table>";
-				$club = "";
-				switch($_SESSION[getIP()]['user']){
-					case "BD": 	$club = "bd-club";
-								break;
-					case "BC": 	$club = "bc-club";
-								break;
-					case "OUT": $club = "schankwagen";
-								break;
-					default:	die("Undefinierter Club");
-				}
-		
+		$content.= "<div><form id=\"sale\" action=\"index.php?action=input\" method=\"post\">".
+			 "<table class=\"input\">".
+				"<th colspan=\"5\"><img src=\"images/icon_".$_SESSION[getIP()]['user'].".png\"</th>";
 				connect();
-				$beers = getBeers($club);
+				$beers = getBeers($_SESSION[getIP()]['user']);
 				close();
 				$i = 1;
 				$content.= "<tr>\n";
 				foreach($beers as $beer){
 					$content.= "  <td>F".$i++."</td>\n".
-						 "  <td>".$beer['name']."</td>\n".
-						 "  <td class=\"cost\">".($beer['price']/100)."<input name=\"price_".$beer['id']."\" type=\"hidden\" value=\"".$beer['price']."\" >"."</td>\n".
+						 "  <td><img src=\"images/itemicon_".$beer['name'].".png\"></td>\n".
+						 "  <td class=\"cost\">".number_format($beer['price']/100,2)."<input name=\"price_".$beer['id']."\" type=\"hidden\" value=\"".$beer['price']."\" >"."</td>\n".
 						 "  <td>€</td>\n".
-						 "  <td><input class=\"beers\" id=\"".$beer['id']."\" name=\"amount_".$beer['id']."\" type=\"text\" value=\"0\"></input></td>\n";
+						 "  <td><input class=\"beers\" id=\"".$beer['id']."\" name=\"amount_".$beer['id']."\" type=\"text\" value=\"0\"></td>\n";
 					$content.= "</tr><tr>";
 				}
 				$content.= "</tr>\n".
+					 "<tr><td>&nbsp;</td></tr>".
 					 "<tr>".
-						"<td></td>".
-						"<td>Summe</td>".
-						"<td class=\"sum\">0</td>".
-						"<td>€</td>".
-						"<td><input id=\"sub\" type=\"submit\" value=\"Senden\"></input></td>".
+						"<td><a href='index.php?action=logout'><input type=\"button\" value=\"Logout\"></a></td>".
+						"<td class=\"summe\">Summe</td>".
+						"<td class=\"summe\" id=\"sum\">0</td>".
+						"<td class=\"summe\">€</td>".
+						"<td><input id=\"sub\" type=\"submit\" value=\"Senden\"></td>".
 					"</tr>".
 			"</table>".
-			"</form>";
+			"</form></div>";
 	}
 }
 ?>

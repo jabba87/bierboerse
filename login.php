@@ -10,21 +10,11 @@ if(isset($_POST)&&!empty($_POST)){
     }else{
       if(md5($_POST['kennwort'])==getPassword($_POST['club'])){
         $_SESSION[getIP()]['user'] = $_POST['club'];
-		switch($_POST['club']){
-			case "BD": 	$clubID = 1;
-						break;
-			case "BC": 	$clubID = 2;
-						break;
-			case "OUT": $clubID = 3;
-		}
-		$_SESSION[getIP()]['clubID'] = $clubID;
-
-		}else{
+	  }else{
         $content.= "Falsches Kennwort.";
       }
     }
     
-
 	logLogin(getIP(),$_POST['club'],isset($_SESSION[getIP()]['user']));
 	close();
 }

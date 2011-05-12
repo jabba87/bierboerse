@@ -27,6 +27,12 @@ if(isset($_GET['action'])){
 		case 'logout':
 		  require "logout.php";
 		  break;
+		case 'crash':
+		  require "crash.php";
+		  break;
+		case 'reset':
+		  require "reset.php";
+		  break;
 		default:require "view.php";
 	}
 }else{
