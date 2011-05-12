@@ -36,21 +36,30 @@ if(!isset($_SESSION[getIP()]['user'])){
 				$i = 1;
 				$content.= "<tr>\n";
 				foreach($beers as $beer){
-					$content.= "  <td>F".$i++."</td>\n".
-						 "  <td><img src=\"images/itemicon_".$beer['name'].".png\"></td>\n".
-						 "  <td class=\"cost\">".number_format($beer['price']/100,2)."<input name=\"price_".$beer['id']."\" type=\"hidden\" value=\"".$beer['price']."\" >"."</td>\n".
-						 "  <td>€</td>\n".
-						 "  <td><input class=\"beers\" id=\"".$beer['id']."\" name=\"amount_".$beer['id']."\" type=\"text\" value=\"0\"></td>\n";
+					$content.= 
+						"<td><img src=\"images/itemicon_".$beer['name'].".png\"></td>\n".
+						"<td class=\"costs\">".number_format($beer['price']/100,2)."<input name=\"price_".$beer['id']."\" type=\"hidden\" value=\"".$beer['price']."\" >"."</td>\n".
+						"<td>€</td>\n".
+						"<td><input class=\"amounts\" id=\"".$beer['id']."\" name=\"amount_".$beer['id']."\" type=\"text\" value=\"0\"></td>\n".	
+						"<td class=\"input_buttons\">".
+							" <input type=\"button\" class=\"plus\" id=\"$i\" value=\"+\">".
+							" (F".$i.")".
+						"</td>".
+						"<td class=\"input_buttons\">".
+							" <input type=\"button\" class=\"minus\" id=\"$i\" value=\"-\">".
+							" (Shift+F".$i++.") ".
+						"</td>";
 					$content.= "</tr><tr>";
 				}
 				$content.= "</tr>\n".
 					 "<tr><td>&nbsp;</td></tr>".
 					 "<tr>".
-						"<td><a href='index.php?action=logout'><input type=\"button\" value=\"Logout\"></a></td>".
 						"<td class=\"summe\">Summe</td>".
 						"<td class=\"summe\" id=\"sum\">0</td>".
 						"<td class=\"summe\">€</td>".
 						"<td><input id=\"sub\" type=\"submit\" value=\"Senden\"></td>".
+						"<td></td>".
+						"<td><a href='index.php?action=logout'><input type=\"button\" value=\"Logout\"></a></td>".
 					"</tr>".
 			"</table>".
 			"</form></div>";

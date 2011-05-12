@@ -1,16 +1,17 @@
-/*img {width:100px}*/
+/*Allgemein*/
 a {text-decoration:none}
 body {background-color:#DDDDDD}
 
+/*Für Input-Seite*/
 .input th img {width:150px; margin-bottom:30px}
-.input td {padding-left:15px; padding-right:15px; text-align:center; padding-top:5px; font-weight:bold; font-size:20px}
+.input td {padding-left:15px; padding-right:15px; font-weight:bold; font-size:20px}
 .input input, button {font-size:18px; width:100px; text-align:center}
+.input td img {width:100px}
 .summe {color:red; font-size:20px; font-weight:bold}
+.input_buttons {text-align:left}
+.input_buttons input {width:40px;height:40px}
 
-.input td img {height:20px}
-.input td {padding-top:0px}
-.input th img {width:50px; margin-bottom:0px}
-
+/*Für Admin-Seite*/
 .admin td {text-align:right; font-size:20px; vertical-align:top}
 .admin table{margin-left:20px;}
 .admin input[type=button]{font-size:20px; margin-left:100px}
@@ -18,6 +19,7 @@ body {background-color:#DDDDDD}
 .admin_icons th{text-align:center}
 .admin_icons td th {font-size:18px; padding-left:7px; padding-right:7px; text-align:right; vertical-align:top	}
 
+/*Für View-Seite*/
 .stdview td {height:50px; padding-left:18px; padding-right:18px; border:0px solid black; font-size:24px; font-weight:bold}
 .stdview th {font-size:30px; font-weight:bold; padding-bottom:20px}
 .stdview img {width:100px}

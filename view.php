@@ -38,13 +38,13 @@ echo "</table>".
 require "functions.php";
 renderGraphs();
 
-$beer = $beers[$_GET['picture']];
-
-echo "<img src=\"images/graphs/BD ".$beer['bdname'].".png\"><br>".
-	 "<img src=\"images/graphs/BC ".$beer['bcname'].".png\"><br>";
-	 if ($beer['outname'] != "")
-	 echo "<img src=\"images/graphs/OUT ".$beer['outname'].".png\">";
-
+if(isset($_GET['picture'])){
+	$beer = $beers[$_GET['picture']];
+	echo "<img src=\"images/graphs/BD ".$beer['bdname'].".png\"><br>".
+		 "<img src=\"images/graphs/BC ".$beer['bcname'].".png\"><br>";
+		 if ($beer['outname'] != "")
+		 echo "<img src=\"images/graphs/OUT ".$beer['outname'].".png\">";
+}
 
 echo "</td></tr></table>";
 
