@@ -40,4 +40,8 @@ function logLogin($ip,$user,$success){
 	logEvent(time(),$ip,"login",$user.$success);
 }
 
+function crash($ip){
+  logEvent(time(),$ip,"crash",NULL);
+
+}
 ?>

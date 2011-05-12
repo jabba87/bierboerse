@@ -27,6 +27,12 @@ if(isset($_GET['action'])){
 		case 'logout':
 		  require "logout.php";
 		  break;
+		case 'crash':
+      connect();
+      crash(getIP());  
+		  close();
+		  header('Location: index.php?action=admin');
+		  break;
 		default:require "view.php";
 	}
 }else{
