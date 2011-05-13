@@ -4,8 +4,10 @@ error_reporting(E_ALL);
 define("bierbörse",true);
 
 require_once "mysql.php";
-require "logging.php";
+include_once "functions.php";
+require_once "logging.php";
 global $content;
+global $refresh;
 
 
 logActions(getIP()); 
@@ -38,7 +40,5 @@ if(isset($_GET['action'])){
 }else{
   header("Location: index.php?action=view");
 }
-require "header.html";
-echo $content;
-require "footer.html";
+require "template.php";
 ?>

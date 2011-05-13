@@ -2,12 +2,12 @@
 
 defined("bierbörse") or die("Kein direkter Zugriff");
 
-include "phpgraphlib.php";
+include_once "phpgraphlib.php";
 include_once "mysql.php";
 
 function loadPage($url,$time){
-	echo "<html><head><meta http-equiv=\"refresh\" content=\"$time;URL=$url\"></head></html>";
-}
+	return "<html><head><meta http-equiv=\"refresh\" content=\"$time;URL=$url\"></head></html>";
+}     
 
 function renderGraphs(){
   date_default_timezone_set('Europe/Berlin');
@@ -50,5 +50,12 @@ function renderCorrelatedBeerGraph($name,$datas){
   $graph->setLine(true);
   $graph->createGraph();
 
+}
+
+function number2price($num){
+  if(isset($num)&&!empty($num)&&($num>0)){
+   return number_format($num/100,2)." €";
+  }
+  
 }
 

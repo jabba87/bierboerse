@@ -1,8 +1,11 @@
 <?php
 defined("bierbörse") or die("Kein direkter Zugriff");
+require_once "functions.php";
 connect();
+$refresh = "<meta http-equiv=\"refresh\" content=\"10\" >";
 
-echo
+
+$content .=
 //	"<script src=\"http://code.jquery.com/jquery-latest.js\"></script>".
 //	"<script src=\"view.js\"></script>".
 	"<table><tr><td>".
@@ -16,45 +19,48 @@ echo
 
 $beers = getAllBeers();
 foreach($beers as $row){
-echo "<tr><td>".
-	number_format($row['bdprice']/100,2)."&nbsp;€".
+$content .= "<tr><td>".
+	number2price($row['BD_cur_price']).
 	"</td><td>".
-	"<img src=\"images/itemicon_".$row['bdname'].".png\">".
+	"<img src=\"images/itemicon_".$row['BD_beer_name'].".png\">".
 	"</td><td>".
-	number_format($row['bcprice']/100,2)."&nbsp;€".
+	number2price($row['BC_cur_price']).
 	"</td><td>".
-	"<img src=\"images/itemicon_".$row['bcname'].".png\">".
+	"<img src=\"images/itemicon_".$row['BC_beer_name'].".png\">".
 	"</td><td>";
-	if (!$row['outprice']=="")
-		echo number_format($row['outprice']/100,2)."&nbsp;€";
-	echo "</td><td>";
-	if (!$row['outname']=="")
-		echo "<img src=\"images/itemicon_".$row['outname'].".png\">";
-	echo "</td></tr>";
+	if (!$row['OUT_cur_price']=="")
+		$content .= number2price($row['OUT_cur_price']);
+	$content .= "</td><td>";
+	if (!$row['OUT_beer_name']=="")
+		$content .= "<img src=\"images/itemicon_".$row['OUT_beer_name'].".png\">";
+	$content .= "</td></tr>";
 }
-echo "</table>".
+$content .= "</table>".
 	 "</td><td class=\"stdview_pictures\"><br>";
 
-require "functions.php";
 renderGraphs();
 
-if(isset($_GET['picture'])){
-	$beer = $beers[$_GET['picture']];
-	echo "<img src=\"images/graphs/BD ".$beer['bdname'].".png\"><br>".
-		 "<img src=\"images/graphs/BC ".$beer['bcname'].".png\"><br>";
-		 if ($beer['outname'] != "")
-		 echo "<img src=\"images/graphs/OUT ".$beer['outname'].".png\">";
+if(!isset($_SESSION[getIP()]['picture'])){
+
+	$_SESSION[getIP()]['picture']=0;	 
 }
 
-echo "</td></tr></table>";
+$beer = $beers[$_SESSION[getIP()]['picture']];
+$content .= "<img src=\"images/graphs/BD ".$beer['BD_beer_name'].".png\"><br>".
+		        "<img src=\"images/graphs/BC ".$beer['BC_beer_name'].".png\"><br>";
+if ($beer['OUT_beer_name'] != ""){
+    $content .= "<img src=\"images/graphs/OUT ".$beer['OUT_beer_name'].".png\">";
+
+}
+$_SESSION[getIP()]['picture']++;
+if($_SESSION[getIP()]['picture']>11){
+  $_SESSION[getIP()]['picture'] =1;
+}
+
+
+$content .= "</td></tr></table>";
 
 close();
-
-if (!isset($_GET['picture'])){
-	loadPage("index.php?action=view&picture=1",5);
-}else{
-	loadPage("index.php?action=view&picture=".((($_GET['picture']+1)%12)),5);
-}
 
 
 /* versuch der sleep-funtion, 
