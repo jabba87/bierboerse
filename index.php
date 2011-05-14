@@ -17,6 +17,9 @@ if(isset($_GET['action'])){
 		case 'view':
 			require "view.php";
 			break;
+		case 'view2':
+		  require "view2.php";
+		  break;
 		case 'input':
 			require "input.php";
 			break;

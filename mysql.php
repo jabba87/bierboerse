@@ -50,7 +50,7 @@ function getBeers($club){
 }
 
 function getSaleReview($club){
-  $query = "SELECT ".$club.".".$club."_club_beer_id, ".$club.".".$club."_beer_name, SUM(sales.amount) as sumamount, SUM(sales.amount*sales.cur_price) as sumprice FROM ".pref($club).", ".pref("sales")." WHERE ".$club.".".$club."_club_beer_id = sales.clubBeers_id";
+  $query = "SELECT ".$club.".".$club."_club_beer_id, ".$club.".".$club."_beer_name, SUM(sales.amount) as sumamount, SUM(sales.amount*sales.cur_price) as sumprice FROM ".pref($club).", ".pref("sales")." WHERE ".$club.".".$club."_club_beer_id = sales.clubBeers_id GROUP BY sales.clubBeers_id";
   $res = query($query);
   while ($h = mysql_fetch_array($res)) {
 		$row[] = $h;

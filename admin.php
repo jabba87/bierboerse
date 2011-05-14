@@ -61,11 +61,11 @@ if(!empty($sales)){
 $content .="<table><tr><th>Bier</th><th>Verkäufe</th><th>Umsatz</th><th>Durschnittlicher Preis</th></tr>";
 foreach($sales as $sale){
 if($sale['BD_beer_name'] != NULL){
-$content.= "<tr><td>".$sale['BD_beer_name']."</td><td>".$sale['sumamount']."</td><td>".($sale['sumprice']/100)."</td><td>".($sale['sumprice']/100/$sale['sumamount'])."</td></tr>";
+$content.= "<tr><td>".$sale['BD_beer_name']."</td><td>".$sale['sumamount']."</td><td>".number2price($sale['sumprice'])."</td><td>".number2price($sale['sumprice']/$sale['sumamount'])."</td></tr>";
 }
 }
 $sum = getClubSaleSum('BD');
-$content .= "<tr><td>Gesamtsumme</td><td>".$sum['sumamount']."</td><td>".($sum['sumprice']/100)."</td></tr>";
+$content .= "<tr><td>Gesamtsumme</td><td>".$sum['sumamount']."</td><td>".number2price($sum['sumprice'])."</td></tr>";
 $content.= "</table>";
 }
 $content.= "</td><td>";
@@ -74,12 +74,12 @@ if(!empty($sales)){
 $content .= "<table><tr><th>Bier</th><th>Verkäufe</th><th>Umsatz</th><th>Durschnittlicher Preis</th></tr>";
 foreach($sales as $sale){
 if($sale['BC_beer_name'] != NULL){
-  $content.= "<tr><td>".$sale['BC_beer_name']."</td><td>".$sale['sumamount']."</td><td>".($sale['sumprice']/100)."</td><td>".($sale['sumprice']/100/$sale['sumamount'])."</td></tr>";
+  $content.= "<tr><td>".$sale['BC_beer_name']."</td><td>".$sale['sumamount']."</td><td>".number2price($sale['sumprice'])."</td><td>".number2price($sale['sumprice']/$sale['sumamount'])."</td></tr>";
 }
 
 }
 $sum = getClubSaleSum('BC');
-$content .= "<tr><td>Gesamtsumme</td><td>".$sum['sumamount']."</td><td>".($sum['sumprice']/100)."</td></tr>";
+$content .= "<tr><td>Gesamtsumme</td><td>".$sum['sumamount']."</td><td>".number2price($sum['sumprice'])."</td></tr>";
 $content.= "</table>";
 }
 $content.="</td><td>";
@@ -88,11 +88,11 @@ if(!empty($sales)){
 $content .= "<table><tr><th>Bier</th><th>Verkäufe</th><th>Umsatz</th><th>Durschnittlicher Preis</th></tr>";
 foreach($sales as $sale){
 if($sale['OUT_beer_name'] != NULL){
-$content.= "<tr><td>".$sale['OUT_beer_name']."</td><td>".$sale['sumamount']."</td><td>".($sale['sumprice']/100)."</td><td>".($sale['sumprice']/100/$sale['sumamount'])."</td></tr>";
+$content.= "<tr><td>".$sale['OUT_beer_name']."</td><td>".$sale['sumamount']."</td><td>".number2price($sale['sumprice'])."</td><td>".number2price($sale['sumprice']/$sale['sumamount'])."</td></tr>";
 }
 }
 $sum = getClubSaleSum('OUT');
-$content .= "<tr><td>Gesamtsumme</td><td>".$sum['sumamount']."</td><td>".($sum['sumprice']/100)."</td></tr>";
+$content .= "<tr><td>Gesamtsumme</td><td>".$sum['sumamount']."</td><td>".number2price($sum['sumprice'])."</td></tr>";
 $content.= "</table>";
 }
 echo "</td></tr></table>";
